@@ -10,7 +10,7 @@ def get_db():
 @app.route("/")
 def index():
     conn = get_db()
-    citas = conn.execute("SELECT * FROM pacientes").fetchall()
+    citas = conn.execute("SELECT * FROM pacientes ORDER BY fecha").fetchall()
     conn.close()
     return render_template("index.html", citas=citas)
 
