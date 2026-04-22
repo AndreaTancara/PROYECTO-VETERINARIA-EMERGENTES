@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="alert alert-info">
+
+🐾 Bienvenido al sistema de citas de la clínica veterinaria
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="row mb-4">
+
+<div class="col-md-4">
+
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h4>{{ citas|length }}</h4>
+
+<p>Total de citas registradas</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h4>🐶</h4>
+
+<p>Pacientes Caninos</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card text-center shadow">
+
+<div class="card-body">
+
+<h4>🐱</h4>
+
+<p>Pacientes Felinos</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LISTADO DE CITAS -->
+
+<div class="row">
+
+{% for cita in citas %}
+
+<div class="col-md-4">
+
+<div class="card shadow mb-4">
+
+<!-- IMAGEN SEGÚN ESPECIE -->
+
+{% if cita[3] == "Perro" %}
+
+<img src="{{ url_for('static', filename='imagenes/perro.jpg') }}" class="card-img-top">
+
+{% elif cita[3] == "Gato" %}
+
+<img src="{{ url_for('static', filename='imagenes/gato.jpg') }}" class="card-img-top">
+
+{% elif cita[3] == "Ave" %}
+
+<img src="{{ url_for('static', filename='imagenes/ave.jpg') }}" class="card-img-top">
+
+{% else %}
+
+<img src="{{ url_for('static', filename='imagenes/perro.jpg') }}" class="card-img-top">
+
+{% endif %}
+
+<div class="card-body">
+
+<!-- ICONO SEGÚN ESPECIE -->
+
+<h5 class="card-title">
+
+{% if cita[3] == "Perro" %}
+🐶 {{ cita[1] }}
+
+{% elif cita[3] == "Gato" %}
+🐱 {{ cita[1] }}
+
+{% elif cita[3] == "Ave" %}
+🦜 {{ cita[1] }}
+
+{% else %}
+🐾 {{ cita[1] }}
+{% endif %}
+
+</h5>
+
+<hr>
+
+<p>
+
+<b>Propietario:</b> {{ cita[2] }}
+
+</p>
+
+<p>
+
+<b>Especie:</b>
+
+{% if cita[3] == "Perro" %}
+<span class="badge bg-primary">Perro</span>
+
+{% elif cita[3] == "Gato" %}
+<span class="badge bg-dark">Gato</span>
+
+{% elif cita[3] == "Ave" %}
+<span class="badge bg-warning">Ave</span>
+
+{% else %}
+<span class="badge bg-secondary">{{ cita[3] }}</span>
+
+{% endif %}
+
+</p>
+
+<p>
+
+<b>Fecha:</b> {{ cita[4] }}
+
+</p>
+
+<br>
+
+<div class="d-flex justify-content-between">
+
+<a href="/editar/{{ cita[0] }}" class="btn btn-warning btn-sm">
+
+✏ Editar
+
+</a>
+
+<a href="/eliminar/{{ cita[0] }}" 
+onclick="return confirm('¿Seguro que deseas cancelar esta cita?')" 
+class="btn btn-danger btn-sm">
+
+🗑 Cancelar
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
